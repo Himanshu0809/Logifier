@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import {Button} from '@material-ui/core';
+import FileUploader from '../FileUploader';
 
 function App() {
   const [data, setData] = useState(undefined);
@@ -16,10 +16,10 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Button variant="contained">Material UI Button</Button>
+    <>
+    <FileUploader />
       <p> {data} </p>
-    </div>
+    </>
   );
 }
 
