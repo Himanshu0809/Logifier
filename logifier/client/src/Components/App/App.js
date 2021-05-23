@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import {Button} from '@material-ui/core';
 
 function App() {
   const [data, setData] = useState(undefined);
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      <h2> Call out to API </h2>
+      <Button variant="contained">Material UI Button</Button>
       <p> {data} </p>
     </div>
   );
