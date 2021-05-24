@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import './FileUploader.scss';
 import { Button } from "@material-ui/core";
 import axios from "axios";
 
@@ -37,8 +38,8 @@ function FileUploader() {
         onChange={fileSelectedHandler}
         ref={fileInputRef}
       />
-      <Button onClick={() => fileInputRef.current.click()}>Pick file</Button>
-      <Button onClick={fileUploadHandler}>Upload</Button>
+      <Button variant="contained" onClick={() => fileInputRef.current.click()}>Pick file</Button>
+      <Button  variant="contained" onClick={fileUploadHandler}>Upload</Button>
     </>
   );
 }
