@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import './FileUploader.scss';
 import { Button } from "@material-ui/core";
 import axios from "axios";
 

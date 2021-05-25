@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.scss';
+import './App.css';
 import FileUploader from '../FileUploader';
 
 function App() {
