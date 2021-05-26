@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.scss';
+import { BackendData} from './App.styles.js';
 import FileUploader from '../FileUploader';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   return (
     <>
     <FileUploader />
-      <p> {data} </p>
+      <BackendData> {data} </BackendData>
     </>
   );
 }
