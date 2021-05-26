@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BackendData} from './App.styles.js';
 import FileUploader from '../FileUploader';
+import DataUploader from '../DataUploader';
 import Navbar from '../Navbar/Navbar.js';
 import Container from '@material-ui/core/Container';
 
@@ -21,6 +22,7 @@ function App() {
     <>
       <Navbar />
       <Container maxWidth="sm">
+        <DataUploader />
         <FileUploader />
         <BackendData> {data} </BackendData>
       </Container>
