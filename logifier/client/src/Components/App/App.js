@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BackendData} from './App.styles.js';
 import FileUploader from '../FileUploader';
+import Navbar from '../Navbar/Navbar.js';
+import Container from '@material-ui/core/Container';
 
 function App() {
   const [data, setData] = useState(undefined);
@@ -17,8 +19,11 @@ function App() {
 
   return (
     <>
-    <FileUploader />
-      <BackendData> {data} </BackendData>
+      <Navbar />
+      <Container maxWidth="sm">
+        <FileUploader />
+        <BackendData> {data} </BackendData>
+      </Container>
     </>
   );
 }
