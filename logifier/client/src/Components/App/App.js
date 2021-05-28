@@ -5,6 +5,7 @@ import DataUploader from '../DataUploader';
 import Navbar from '../Navbar/Navbar.js';
 import Container from '@material-ui/core/Container';
 import DataGrid from '../DataGrid/DataGrid.js';
+import Footer from '../Footer/Footer.js';
 
 function App() {
   const [data, setData] = useState(undefined);
@@ -26,8 +27,8 @@ function App() {
         <DataUploader />
         <FileUploader />
         <BackendData> {data} </BackendData>
-      </Container>
       <DataGrid />
+      <Footer/>
     </>
   );
 }
