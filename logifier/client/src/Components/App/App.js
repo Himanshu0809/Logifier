@@ -16,13 +16,14 @@ function App() {
       if (response.status !== 200) throw Error(body.message);
       setData(body.express);
     };
-    getResponse();
+    // getResponse();
   }, []);
 
   return (
     <>
       <Navbar />
-      <Container maxWidth="sm">
+      <br></br><br />
+      <Container maxWidth="md">
         <FileUploader />
         <BackendData> {data} </BackendData>
       </Container>
