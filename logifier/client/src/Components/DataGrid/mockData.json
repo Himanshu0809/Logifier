@@ -1,0 +1,132 @@
+{
+  "1": {
+    "metadata": {
+      "tableName": "postman-instrumented-spanreq_documenter-ui-0.log",
+      "tableColumns": [
+        "_v",
+        "category",
+        "type",
+        "attributes",
+        "trace",
+        "tags",
+        "timestamp"
+      ],
+      "noOfRows": 3
+    },
+    "data": [
+      {
+        "_v": 1,
+        "category": "span",
+        "type": "req",
+        "attributes": {
+          "method": "GET",
+          "path": "/preview/180932-11c48758-ccdc-4ea9-b877-5d2cb6789ebf?type=meta&languages=true&versionTag=latest&environment=",
+          "host": "documenter-api.postman-stage.tech"
+        },
+        "trace": {
+          "parent_name": "documenter-ui",
+          "id": "v=1;t=b6117990ea2ed868",
+          "span_id": "v=1;s=082418c05ffd4a2f",
+          "parent_id": "v=1;s=6fdc41de8e89460d"
+        },
+        "tags": {},
+        "timestamp": 1622043598278
+      },
+      {
+        "_v": 1,
+        "category": "span",
+        "type": "req",
+        "attributes": {
+          "method": "GET",
+          "path": "/preview/180932-11c48758-ccdc-4ea9-b877-5d2cb6789ebf?type=collection&versionTag=latest&segregateAuth=true",
+          "host": "documenter-api.postman-stage.tech"
+        },
+        "trace": {
+          "parent_name": "documenter-ui",
+          "id": "v=1;t=5252ec71f43a92d6",
+          "span_id": "v=1;s=3f5ecb7245a3bcac",
+          "parent_id": "v=1;s=89ccc412e3fdf4cf"
+        },
+        "tags": {},
+        "timestamp": 1622043598836
+      },
+      {
+        "_v": 1,
+        "category": "span",
+        "type": "req",
+        "attributes": {
+          "method": "GET",
+          "path": "/preview/180932-11c48758-ccdc-4ea9-b877-5d2cb6789ebf?type=snippet&versionTag=latest&lang=curl&variant=cURL",
+          "host": "documenter-api.postman-stage.tech"
+        },
+        "trace": {
+          "parent_name": "documenter-ui",
+          "id": "v=1;t=5fc8822588263b53",
+          "span_id": "v=1;s=ee00076af1d75d12",
+          "parent_id": "v=1;s=b67d834ae2548575"
+        },
+        "tags": {},
+        "timestamp": 1622043598843
+      }
+    ]
+  },
+  "2": {
+    "metadata": {
+      "tableName": "postman-documenter-ui-out-0.log",
+      "tableColumns": ["0", "1", "2", "3", "4"],
+      "noOfRows": 6
+    },
+    "data": [
+      [
+        "2021-05-26",
+        "15:39",
+        "+00:00:",
+        "{\"level\":\"info\",\"event\":{\"_v\":1,\"category\":\"span\",\"type\":\"req\",\"attributes\":{\"method\":\"GET\",\"path\":\"/api/sessions/current\",\"host\":\"identity.postman-stage.tech\"},\"trace\":{\"parent_name\":\"documenter-ui\",\"id\":\"v=1;t=b6117990ea2ed868\"},\"tags\":{},\"timestamp\":1622043598248},\"timestamp\":1622043598248,\"entity.name\":\"documenter-ui:",
+        "stage\",\"entity.type\":\"SERVICE\",\"hostname\":\"pm-documenter-ui-stage-a.i-09f46ca3aaea62370\",\"trace.id\":\"d998c3d932e0b26b5eb1c13bec77e8d6\",\"span.id\":\"c8f7939857afb10d\",\"entity.guid\":\"MjcxMTM2NXxBUE18QVBQTElDQVRJT058MTEzNjQ4NDEyOA\"}"
+      ],
+      [
+        "2021-05-26",
+        "15:39",
+        "+00:00:",
+        "{\"level\":\"info\",\"event\":{\"_v\":1,\"category\":\"span\",\"type\":\"res\",\"attributes\":{\"method\":\"GET\",\"path\":\"/api/sessions/current\",\"code\":200,\"time\":24,\"content_length\":\"805\"},\"trace\":{\"parent_name\":\"documenter-ui\",\"id\":\"v=1;t=b6117990ea2ed868\"},\"tags\":{},\"timestamp\":1622043598271},\"timestamp\":1622043598271,\"entity.name\":\"documenter-ui:",
+        "stage\",\"entity.type\":\"SERVICE\",\"hostname\":\"pm-documenter-ui-stage-a.i-09f46ca3aaea62370\",\"trace.id\":\"d998c3d932e0b26b5eb1c13bec77e8d6\",\"span.id\":\"a51f08d76eebc47c\",\"entity.guid\":\"MjcxMTM2NXxBUE18QVBQTElDQVRJT058MTEzNjQ4NDEyOA\"}"
+      ],
+      [
+        "2021-05-26",
+        "15:39",
+        "+00:00:",
+        "{\"level\":\"info\",\"event\":{\"_v\":1,\"category\":\"span\",\"type\":\"req\",\"attributes\":{\"method\":\"GET\",\"path\":\"/api/sessions/current\",\"host\":\"identity.postman-stage.tech\"},\"trace\":{\"parent_name\":\"documenter-ui\",\"id\":\"v=1;t=5252ec71f43a92d6\"},\"tags\":{},\"timestamp\":1622043598811},\"timestamp\":1622043598811,\"entity.name\":\"documenter-ui:",
+        "stage\",\"entity.type\":\"SERVICE\",\"hostname\":\"pm-documenter-ui-stage-a.i-09f46ca3aaea62370\",\"trace.id\":\"7cb546540bc2ed0bc9caf757647b3ef9\",\"span.id\":\"ae11f50644ae5638\",\"entity.guid\":\"MjcxMTM2NXxBUE18QVBQTElDQVRJT058MTEzNjQ4NDEyOA\"}"
+      ],
+      [
+        "2021-05-26",
+        "15:39",
+        "+00:00:",
+        "{\"level\":\"info\",\"event\":{\"_v\":1,\"category\":\"span\",\"type\":\"req\",\"attributes\":{\"method\":\"GET\",\"path\":\"/api/sessions/current\",\"host\":\"identity.postman-stage.tech\"},\"trace\":{\"parent_name\":\"documenter-ui\",\"id\":\"v=1;t=5fc8822588263b53\"},\"tags\":{},\"timestamp\":1622043598818},\"timestamp\":1622043598818,\"entity.name\":\"documenter-ui:",
+        "stage\",\"entity.type\":\"SERVICE\",\"hostname\":\"pm-documenter-ui-stage-a.i-09f46ca3aaea62370\",\"trace.id\":\"1149a21b2d3aee641f0373d33da1130a\",\"span.id\":\"6d1658ad988c30c4\",\"entity.guid\":\"MjcxMTM2NXxBUE18QVBQTElDQVRJT058MTEzNjQ4NDEyOA\"}"
+      ],
+      [
+        "2021-05-26",
+        "15:39",
+        "+00:00:",
+        "{\"level\":\"info\",\"event\":{\"_v\":1,\"category\":\"span\",\"type\":\"res\",\"attributes\":{\"method\":\"GET\",\"path\":\"/api/sessions/current\",\"code\":200,\"time\":22,\"content_length\":\"805\"},\"trace\":{\"parent_name\":\"documenter-ui\",\"id\":\"v=1;t=5252ec71f43a92d6\"},\"tags\":{},\"timestamp\":1622043598832},\"timestamp\":1622043598832,\"entity.name\":\"documenter-ui:",
+        "stage\",\"entity.type\":\"SERVICE\",\"hostname\":\"pm-documenter-ui-stage-a.i-09f46ca3aaea62370\",\"trace.id\":\"7cb546540bc2ed0bc9caf757647b3ef9\",\"span.id\":\"3847fa55246743b8\",\"entity.guid\":\"MjcxMTM2NXxBUE18QVBQTElDQVRJT058MTEzNjQ4NDEyOA\"}"
+      ],
+      [
+        "2021-05-26",
+        "15:39",
+        "+00:00:",
+        "{\"level\":\"info\",\"event\":{\"_v\":1,\"category\":\"span\",\"type\":\"res\",\"attributes\":{\"method\":\"GET\",\"path\":\"/api/sessions/current\",\"code\":200,\"time\":20,\"content_length\":\"805\"},\"trace\":{\"parent_name\":\"documenter-ui\",\"id\":\"v=1;t=5fc8822588263b53\"},\"tags\":{},\"timestamp\":1622043598837},\"timestamp\":1622043598837,\"entity.name\":\"documenter-ui:",
+        "stage\",\"entity.type\":\"SERVICE\",\"hostname\":\"pm-documenter-ui-stage-a.i-09f46ca3aaea62370\",\"trace.id\":\"1149a21b2d3aee641f0373d33da1130a\",\"span.id\":\"06fbc49886eb4098\",\"entity.guid\":\"MjcxMTM2NXxBUE18QVBQTElDQVRJT058MTEzNjQ4NDEyOA\"}"
+      ]
+    ]
+  },
+  "3": {
+    "metadata": {
+      "tableName": "eb-engine.log",
+      "tableColumns": [],
+      "noOfRows": 0
+    },
+    "data": []
+  }
+}

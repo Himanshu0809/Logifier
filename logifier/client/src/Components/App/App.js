@@ -3,8 +3,8 @@ import { BackendData } from "./App.styles.js";
 import FileUploader from "../FileUploader";
 import Navbar from "../Navbar/Navbar.js";
 import Container from "@material-ui/core/Container";
-import DataGrid from "../DataGrid/DataGrid.js";
-import Footer from "../Footer/Footer.js";
+// import Footer from "../Footer/Footer.js";
+import TabPanel from "../Tabs/TabPanel.js";
 
 function App() {
   const [data, setData] = useState(undefined);
@@ -26,8 +26,9 @@ function App() {
         <FileUploader />
         <BackendData> {data} </BackendData>
       </Container>
-      <DataGrid />
-      <Footer />
+      <TabPanel />
+      
+      {/* <Footer /> */}
     </>
   );
 }

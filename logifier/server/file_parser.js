@@ -63,7 +63,7 @@ fs.readFile(
       }
     }
 
-    console.log(result);
+    console.log(JSON.stringify(result));
   }
 );
 
