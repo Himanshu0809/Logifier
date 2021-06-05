@@ -14,7 +14,6 @@ export default function DataUploader() {
     useEffect(() => {
       const getData = async () => {
         let returnData =  await sendData(inputData);
-        console.log("herhe",returnData);
         setData(returnData.data);
       }
       getData();

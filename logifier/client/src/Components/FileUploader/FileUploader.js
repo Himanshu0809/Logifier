@@ -1,45 +1,69 @@
-import React, { useState, useRef } from "react";
-import { Button } from "@material-ui/core";
+import React, { useState} from "react";
 import axios from "axios";
+import "./fileUpload.css";
+
+function submitForm(contentType, data, setResponse) {
+  axios({
+    url: "/upload",
+    method: "POST",
+    data: data,
+    headers: {
+      "Content-Type": contentType,
+    },
+  })
+    .then((response) => {
+      setResponse(response.data);
+    })
+    .catch((error) => {
+      setResponse("error");
+    });
+}
 
 function FileUploader() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const fileInputRef = useRef(null);
+  const [title, setTitle] = useState("");
+  const [file, setFile] = useState(null);
 
-  const fileSelectedHandler = (event) => {
-    setSelectedFile(event.target.files[0]);
-    console.log(event.target.files[0]);
-  };
-
-  const fileUploadHandler = () => {
+  function uploadWithFormData() {
     const formData = new FormData();
-    formData.append("file", selectedFile, selectedFile.name);
-    axios
-      .post("/api/world", formData, {
-        onUploadProgress: (progressEvent) => {
-          console.log(
-            "progress" +
-              Math.round((progressEvent.loaded / progressEvent.total) * 100),
-            "%"
-          );
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  };
+    formData.append("title", title);
+    formData.append("file", file);
+
+    submitForm("multipart/form-data", formData, (msg) => console.log(msg));
+  }
 
   return (
-    <>
-      <input
-        type="file"
-        style={{ display: "none" }}
-        onChange={fileSelectedHandler}
-        ref={fileInputRef}
-      />
-      <Button variant="contained" onClick={() => fileInputRef.current.click()}>Pick file</Button>
-      <Button  variant="contained" onClick={fileUploadHandler}>Upload</Button>
-    </>
+    <div className="App">
+      <h2>Upload Form</h2>
+      <form>
+        <label>
+          File Title
+          <input
+            type="text"
+            name="name"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            placeholder="Give a title to your upload"
+          />
+        </label>
+
+        <label>
+          File
+          <input
+            type="file"
+            name="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+        </label>
+
+        <input
+          type="button"
+          value="Upload"
+          onClick={uploadWithFormData}
+        />
+      </form>
+    </div>
   );
 }
 
