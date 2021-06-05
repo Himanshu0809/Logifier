@@ -4,7 +4,7 @@ import { FooterContent } from './Footer.styles.js';
 
 function Footer() {
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="relative" color="primary">
       <Container maxWidth="md">
         <Toolbar>
           <Typography variant="body1" color="inherit">
