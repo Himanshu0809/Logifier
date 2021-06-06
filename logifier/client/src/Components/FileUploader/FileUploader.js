@@ -1,84 +1,23 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Container,
   TextField,
-  Button,
-  Card,
-  CardMedia,
-  CardActions,
+  Button
 } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
 import {
   UploadFileHeader,
   FileUploadWrapper,
-  FileUploadText,
+  HeaderHorizontalRule,
+  FileNameLabel,
+  useStyles
 } from "./FileUploader.styles.js";
-
-const useStyles = makeStyles((theme) => ({
-  uploadFileContainer: {
-    backgroundColor: "white",
-    marginLeft: "15px",
-    border: "1px solid #0000003b",
-  },
-
-  uploadContentWrapper: {
-    padding: "10px",
-    borderBottom: "1px solid #0000003b",
-    borderWidth: "20%",
-  },
-
-  filaNameInput: {
-    backgroundColor: "white",
-  },
-
-  uploadIcon: {
-    color: "#828282",
-    display: "flex",
-    justifyContent: "center",
-    margin: "4% auto auto auto",
-    width: "50%",
-    height: "50%",
-    border: "6px dashed #828282",
-  },
-
-  uploadButtonWrapper: {
-    backgroundColor: "white",
-    justifyContent: "center",
-    padding: "15px",
-    margin: "auto",
-
-    "& :hover": {
-      backgroundColor: "#dae5ff",
-    },
-  },
-
-  uploadButton: {
-    padding: "15px",
-    width: "70%",
-    backgroundColor: "#dae5ff",
-    color: "black",
-  },
-}));
+import {uploadFile} from '../../services/file_uploader_service';
 
 function submitForm(contentType, data, setResponse) {
-  axios({
-    url: "/upload",
-    method: "POST",
-    data: data,
-    headers: {
-      "Content-Type": contentType,
-    },
-  })
-    .then((response) => {
-      setResponse(response.data);
-    })
-    .catch((error) => {
-      setResponse("error");
-    });
+  setResponse(uploadFile(contentType, data));
 }
 
 function FileUploader() {
@@ -98,23 +37,18 @@ function FileUploader() {
   return (
     <>
       <Box
-        bgcolor="#dae5ff"
+        bgcolor="#f4f4fd"
         p={1}
         borderColor="#b9b6b6"
         borderBottom={1}
-        border={1}
-      >
-        <UploadFileHeader>Upload File</UploadFileHeader>
-      </Box>
-      <Box
-        bgcolor="#dae5ff"
-        p={1}
-        borderColor="#b9b6b6"
-        borderBottom={1}
+        borderRadius={20}
+        boxShadow={12}
         border={1}
         justifyContent="center"
       >
-        <Container maxWidth="sm">
+        <UploadFileHeader>Upload File</UploadFileHeader>
+        <HeaderHorizontalRule />
+        <Container maxWidth="lg">
           <form autoComplete="off">
             <TextField
               className={classes.filaNameInput}
@@ -130,39 +64,34 @@ function FileUploader() {
                 setTitle(e.target.value);
               }}
             />
-            <Card className={classes.uploadFileContainer}>
-              <CardMedia className={classes.uploadContentWrapper}>
-                <FileUploadWrapper>
-                  <FileUploadText>
-                    Add a file here
-                    <AddIcon
-                      className={classes.uploadIcon}
-                      fontSize="large"
-                      onClick={() => inputRef.current.click()}
-                    />
-                  </FileUploadText>
 
-                  <input
-                    ref={inputRef}
-                    type="file"
-                    name="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                  />
-                </FileUploadWrapper>
-              </CardMedia>
-              <CardActions className={classes.uploadButtonWrapper}>
-                <Button
-                  className={classes.uploadButton}
-                  variant="contained"
-                  value="Upload"
-                  color="primary"
-                  startIcon={<CloudUploadIcon />}
-                  onClick={uploadWithFormData}
-                >
-                  Upload
-                </Button>
-              </CardActions>
-            </Card>
+            <FileUploadWrapper>
+              <AddIcon
+                className={classes.uploadIcon}
+                fontSize="large"
+                onClick={() => inputRef.current.click()}
+              />
+
+              <Button
+                className={classes.uploadButton}
+                variant="contained"
+                value="Upload"
+                color="primary"
+                startIcon={<CloudUploadIcon />}
+                onClick={uploadWithFormData}
+              >
+                Upload
+              </Button>
+            </FileUploadWrapper>
+
+            <input
+              ref={inputRef}
+              style={{ display: "none" }}
+              type="file"
+              name="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <FileNameLabel>{file && file.name}</FileNameLabel>
           </form>
         </Container>
       </Box>
