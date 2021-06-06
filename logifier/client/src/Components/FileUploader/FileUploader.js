@@ -1,10 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  Box,
-  Container,
-  TextField,
-  Button
-} from "@material-ui/core";
+import { Box, Container, TextField, Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
 import {
@@ -12,9 +7,9 @@ import {
   FileUploadWrapper,
   HeaderHorizontalRule,
   FileNameLabel,
-  useStyles
+  useStyles,
 } from "./FileUploader.styles.js";
-import {uploadFile} from '../../services/file_uploader_service';
+import { uploadFile } from "../../services/file_uploader_service";
 
 function submitForm(contentType, data, setResponse) {
   setResponse(uploadFile(contentType, data));

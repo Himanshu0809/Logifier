@@ -6,7 +6,6 @@ import Footer from "../Footer/Footer.js";
 import TabPanel from "../Tabs/TabPanel.js";
 
 function App() {
-  
   return (
     <>
       <Navbar />
