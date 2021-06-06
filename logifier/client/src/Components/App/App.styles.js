@@ -1,5 +1,2 @@
-// import styled from 'styled-components';
-
-// export const BackendData= styled.p`
-//   font-size: 40px;
-// `;
+import styled from 'styled-components';
+import { makeStyles } from "@material-ui/core/styles";

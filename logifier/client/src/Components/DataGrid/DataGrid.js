@@ -40,7 +40,6 @@ const initialData = jsonData[1].data.map((data) => {
   initialColumns = jsonData[1].metadata.tableColumns;
 
 function DataGrid() {
-  console.log(initialData);
   const [data, setData] = useState(initialData);
   const [columns, setColumns] = useState(initialColumns);
   const options = {
