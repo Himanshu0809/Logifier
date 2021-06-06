@@ -1,5 +1,5 @@
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
-export const BackendData= styled.p`
-  font-size: 40px;
-`;
+// export const BackendData= styled.p`
+//   font-size: 40px;
+// `;

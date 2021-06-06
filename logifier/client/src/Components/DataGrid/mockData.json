@@ -6,9 +6,6 @@
         "_v",
         "category",
         "type",
-        "attributes",
-        "trace",
-        "tags",
         "timestamp"
       ],
       "noOfRows": 3
@@ -18,54 +15,21 @@
         "_v": 1,
         "category": "span",
         "type": "req",
-        "attributes": {
-          "method": "GET",
-          "path": "/preview/180932-11c48758-ccdc-4ea9-b877-5d2cb6789ebf?type=meta&languages=true&versionTag=latest&environment=",
-          "host": "documenter-api.postman-stage.tech"
-        },
-        "trace": {
-          "parent_name": "documenter-ui",
-          "id": "v=1;t=b6117990ea2ed868",
-          "span_id": "v=1;s=082418c05ffd4a2f",
-          "parent_id": "v=1;s=6fdc41de8e89460d"
-        },
-        "tags": {},
+      
         "timestamp": 1622043598278
       },
       {
         "_v": 1,
         "category": "span",
         "type": "req",
-        "attributes": {
-          "method": "GET",
-          "path": "/preview/180932-11c48758-ccdc-4ea9-b877-5d2cb6789ebf?type=collection&versionTag=latest&segregateAuth=true",
-          "host": "documenter-api.postman-stage.tech"
-        },
-        "trace": {
-          "parent_name": "documenter-ui",
-          "id": "v=1;t=5252ec71f43a92d6",
-          "span_id": "v=1;s=3f5ecb7245a3bcac",
-          "parent_id": "v=1;s=89ccc412e3fdf4cf"
-        },
-        "tags": {},
+       
         "timestamp": 1622043598836
       },
       {
         "_v": 1,
         "category": "span",
         "type": "req",
-        "attributes": {
-          "method": "GET",
-          "path": "/preview/180932-11c48758-ccdc-4ea9-b877-5d2cb6789ebf?type=snippet&versionTag=latest&lang=curl&variant=cURL",
-          "host": "documenter-api.postman-stage.tech"
-        },
-        "trace": {
-          "parent_name": "documenter-ui",
-          "id": "v=1;t=5fc8822588263b53",
-          "span_id": "v=1;s=ee00076af1d75d12",
-          "parent_id": "v=1;s=b67d834ae2548575"
-        },
-        "tags": {},
+        
         "timestamp": 1622043598843
       }
     ]
