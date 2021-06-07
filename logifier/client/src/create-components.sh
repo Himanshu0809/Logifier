@@ -14,7 +14,7 @@ mkdir -p Components/$component_name && cd $_
 touch $component_name.js $component_name.styles.js index.js
 
 # Print template for component_name.js file
-echo "import React from 'react';\n\nfunction $component_name() {\n\n}\n\nexport default $component_name;"> $component_name.js
+echo "import React from 'react';\n\nconst $component_name = () => {\n\treturn(\n\t\t<>\n\n\t\t</>\n\t);\n}\n\nexport default $component_name;"> $component_name.js
 
 # Print template for index.js file
 echo "import $component_name from './$component_name'; \n\nexport default $component_name;" > index.js
