@@ -3,15 +3,29 @@
 changedFiles="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 checkForChangedFiles() {
-    echo "$changedFiles" | grep --quiet "$1" && eval "$2"
+    echo "$changedFiles" | grep --quiet "$1" && eval "$2 $3"
 }
 
 packageJsonHasChanged() {
   echo "Changes to package.json detected, installing updates"
-  npm i
+  if echo $1 | grep 'client';
+  then
+    pushd client
+    npm i 
+    popd
+  else
+    npm i 
+  fi
 }
 
-checkForChangedFiles package.json packageJsonHasChanged
+checkForChangedFiles client/package.json packageJsonHasChanged client
+checkForChangedFiles logifier/package.json packageJsonHasChanged
+
+if [[ ! -e ./nohup.out ]]; 
+then
+  echo "nohup.out is not created .. creating here ...."
+  touch nohup.out
+fi
 
 serverCmd="npm run server"
 nohup $serverCmd &
@@ -34,5 +48,6 @@ tail -f nohup.out
 # In the meantime, wait for $bg_pid to end.
 wait $server_bg_pid
 wait $client_bg_pid
+
 
 cat /dev/null >  nohup.out
