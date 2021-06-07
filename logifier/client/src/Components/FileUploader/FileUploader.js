@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Box, Container, TextField, Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
@@ -11,28 +11,36 @@ import {
 } from "./FileUploader.styles.js";
 import { uploadFile } from "../../services/file_uploader_service";
 import MessagePlaceholder from "../MessagePlaceholder/MessagePlaceholder.js";
-
-const submitForm = async (contentType, data) => {
-  const response = await uploadFile(contentType, data);
-  // we can set the state here ...
-  console.log("response recieved from server", response);
-};
+import DataContext from '../../provider'
 
 const FileUploader = (props) => {
+  const dataContext = useContext(DataContext);
   const classes = useStyles();
   const inputRef = useRef();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [responseData, setResponseData] = useState(null);
 
+  const submitForm = async (contentType, data) => {
+    const response = await uploadFile(contentType, data);
+    // we can set the state here ...
+    console.log("response recieved from server", response);
+    setResponseData(response.data);
+  };
+  
   const uploadWithFormData = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", file);
 
     submitForm("multipart/form-data", formData);
+    // console.log('form response',formResponse);
+    dataContext.handleUploadedFileData(responseData);
     setIsSuccess(true);
   };
+
+  
 
   return (
     <>

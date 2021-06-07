@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -6,9 +6,9 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DataGrid from "../DataGrid";
 import { useStyles } from "./TabPanel.styles.js";
-var jsonData = require("./mockData.json");
+import DataContext from '../../provider';
 
-const totalValues = Object.keys(jsonData).length;
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -43,14 +43,22 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs() {
+  const dataContext = useContext(DataContext);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [totalValues, setTotalValues] = useState(0);
+
+  useEffect(() => {
+    console.log('inside useeffect', dataContext);
+    setTotalValues(dataContext.uploadedFileData ? Object.keys(dataContext.uploadedFileData).length: 0);
+  }, [dataContext.uploadedFileData])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
     <div className={classes.root}>
+      {console.log("inside tab panel", totalValues)}
       <Tabs
         orientation="vertical"
         variant="scrollable"
@@ -59,20 +67,20 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        {[...Array(totalValues)].map((x, i) => {
+        {totalValues.length>0 ? [...Array(totalValues)].map((x, i) => {
           return (
             <Tab
-              label={JSON.stringify(jsonData[i + 1].metadata.tableName)}
+              label={JSON.stringify(dataContext.uploadedFileData[i + 1].metadata.tableName)}
               {...a11yProps(i)}
             />
           );
-        })}
+        }): "hello"}
       </Tabs>
-      {[...Array(totalValues)].map((x, i) => {
+      {totalValues.length>0 ? [...Array(totalValues)].map((x, i) => {
         return (
           <TabPanel value={value} index={i} className={classes.panelWrapper}>
             <DataGrid
-              initialData={jsonData[i + 1].data.map((data) => {
+              initialData={dataContext.uploadedFileData[i + 1].data.map((data) => {
                 return Object.entries(data).map(([key, value], i) => {
                   if (typeof value !== "string") {
                     return JSON.stringify(value);
@@ -81,11 +89,11 @@ export default function VerticalTabs() {
                   }
                 });
               })}
-              initialColumns={jsonData[i + 1].metadata.tableColumns}
+              initialColumns={dataContext.uploadedFileData[i + 1].metadata.tableColumns}
             />
           </TabPanel>
         );
-      })}
+      }):"hehe"}
     </div>
   );
 }
