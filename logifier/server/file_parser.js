@@ -1,7 +1,8 @@
 var fs = require("fs");
 var path = require("path");
+var axios = require("axios");
 
-// get the table name 
+// get the table name
 function getTableName(fullPath) {
   let splittedPath = fullPath.split("/");
   return splittedPath[splittedPath.length - 1];
@@ -28,62 +29,81 @@ function readFile(fileName) {
   }
 }
 
-module.exports = {
-    getParsedData : function(fileName) {
-        let result = {};
-        const filterToken = "----------------------------------------";
-        const retVal = readFile(fileName);
-        if (retVal.status !== 200) {
-          console.log("something went wrong :-( ");
-        } else {
-          const splittedData = retVal.fileContent.split("\n");
-          let even_odd = 0,
-            idx = 0;
-      
-          for (let i = 0; i < splittedData.length; i++) {
-            if (splittedData[i] === filterToken) {
-              even_odd ^= 1;
-              logFileName = splittedData[i - 1];
-              if (!even_odd) {
-                idx += 1;
-                result[idx] = {
-                  metadata: {
-                    // intially setting the table name with logFileName
-                    tableName: logFileName,
-                    tableColumns: "",
-                    noOfRows: "",
-                  },
-                  data: [],
-                };
-              }
-            }
-      
-            if (
-              !even_odd &&
-              splittedData[i] !== filterToken &&
-              splittedData[i] != ""
-            ) {
-              try {
-                result[idx].data.push(JSON.parse(splittedData[i]));
-              } catch (error) {
-                result[idx].data.push(splittedData[i].split(" "));
-              }
-            }
-          }
-      
-          for (const key in result) {
-            try {
-              result[key].metadata.tableColumns = getColumnsName(result[key].data);
-              result[key].metadata.noOfRows = result[key].data.length;
-              result[key].metadata.tableName = getTableName(
-                result[key].metadata.tableName
-              );
-            } catch (error) {
-              console.log("Do Nothing");
-            }
-          }
+const fetchUrlData = async (url) => {
+  try {
+    let res = await axios.get(url);
+    return { fileContent: res.data, status: 200 };
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const parsingLogic = (retVal) => {
+  let result = {};
+  const filterToken = "----------------------------------------";
+  if (retVal.status !== 200) {
+    console.log("something went wrong :-( ");
+  } else {
+    const splittedData = retVal.fileContent.split("\n");
+    let even_odd = 0,
+      idx = 0;
+
+    for (let i = 0; i < splittedData.length; i++) {
+      if (splittedData[i] === filterToken) {
+        even_odd ^= 1;
+        logFileName = splittedData[i - 1];
+        if (!even_odd) {
+          idx += 1;
+          result[idx] = {
+            metadata: {
+              // intially setting the table name with logFileName
+              tableName: logFileName,
+              tableColumns: "",
+              noOfRows: "",
+            },
+            data: [],
+          };
         }
-        console.log(result);
-        return JSON.stringify(result);
       }
+
+      if (
+        !even_odd &&
+        splittedData[i] !== filterToken &&
+        splittedData[i] != ""
+      ) {
+        try {
+          result[idx].data.push(JSON.parse(splittedData[i]));
+        } catch (error) {
+          result[idx].data.push(splittedData[i].split(" "));
+        }
+      }
+    }
+
+    for (const key in result) {
+      try {
+        result[key].metadata.tableColumns = getColumnsName(result[key].data);
+        result[key].metadata.noOfRows = result[key].data.length;
+        result[key].metadata.tableName = getTableName(
+          result[key].metadata.tableName
+        );
+      } catch (error) {
+        console.log("Do Nothing");
+      }
+    }
+  }
+  return result;
+};
+
+module.exports = {
+  getParsedData: function (fileName) {
+    const retVal = readFile(fileName);
+    result = parsingLogic(retVal);
+    console.log(result);
+    return JSON.stringify(result);
+  },
+  getUrlParsedData: async function (url) {
+    return await fetchUrlData(url).then((res) => {
+      return JSON.stringify(parsingLogic(res));
+    });
+  },
 };

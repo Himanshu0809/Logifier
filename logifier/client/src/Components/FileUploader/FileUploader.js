@@ -8,8 +8,11 @@ import {
   HeaderHorizontalRule,
   FileNameLabel,
   useStyles,
+  LoadFileWrapper,
+  FileUploadForm,
+  UrlUploadForm,
 } from "./FileUploader.styles.js";
-import { uploadFile } from "../../services/file_uploader_service";
+import { uploadFile, loadUrl } from "../../services/file_uploader_service";
 import MessagePlaceholder from "../MessagePlaceholder/MessagePlaceholder.js";
 import DataContext from "../../provider";
 
@@ -18,6 +21,7 @@ const FileUploader = (props) => {
   const classes = useStyles();
   const inputRef = useRef();
   const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
   const [file, setFile] = useState(null);
   const [responseData, setResponseData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -30,6 +34,12 @@ const FileUploader = (props) => {
 
   const submitForm = async (contentType, data) => {
     const response = await uploadFile(contentType, data);
+    return response.data;
+  };
+
+  const submitUrlForm = async (data) => {
+    console.log('ded', data)
+    const response = await loadUrl(data);
     return response.data;
   };
 
@@ -69,6 +79,14 @@ const FileUploader = (props) => {
     setIsSuccess(true);
   };
 
+  const uploadWithUrl = async () => {
+    const urlResponse = await submitUrlForm(String(url));
+    setResponseData(urlResponse);
+    setAlertMessage("URL submitted successfully!!");
+    setSeverity("success");
+    setIsSuccess(true);
+  }
+
   return (
     <>
       {isSuccess && showAlertMessage(alertMessage, severity)}
@@ -85,54 +103,86 @@ const FileUploader = (props) => {
         <UploadFileHeader>Upload File</UploadFileHeader>
         <HeaderHorizontalRule />
         <Container maxWidth="lg">
-          <form autoComplete="off">
-            <TextField
-              className={classes.filaNameInput}
-              id="outlined-basic"
-              label="File Name"
-              style={{ margin: 8 }}
-              placeholder="Give a name to your upload"
-              value={title}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-              onKeyPress={handleKeypress}
-            />
-
-            <FileUploadWrapper>
-              <AddIcon
-                className={classes.uploadIcon}
-                fontSize="large"
-                onClick={() => {
-                  inputRef.current.click();
-                  setIsSuccess(false);
+          <LoadFileWrapper>
+            <FileUploadForm autoComplete="off">
+              <TextField
+                className={classes.filaNameInput}
+                id="outlined-basic"
+                label="File Name"
+                style={{ margin: 8 }}
+                placeholder="Give a name to your upload"
+                value={title}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                onChange={(e) => {
+                  setTitle(e.target.value);
                 }}
+                onKeyPress={handleKeypress}
               />
 
-              <Button
-                className={classes.uploadButton}
-                variant="contained"
-                value="Upload"
-                color="primary"
-                startIcon={<CloudUploadIcon />}
-                onClick={uploadWithFormData}
-              >
-                Upload
-              </Button>
-            </FileUploadWrapper>
+              <FileUploadWrapper>
+                <AddIcon
+                  className={classes.uploadIcon}
+                  fontSize="large"
+                  onClick={() => {
+                    inputRef.current.click();
+                    setIsSuccess(false);
+                  }}
+                />
 
-            <input
-              ref={inputRef}
-              style={{ display: "none" }}
-              type="file"
-              name="file"
-              onChange={(e) => setFile(e.target.files[0])}
-            />
-            <FileNameLabel>{file && file.name}</FileNameLabel>
-          </form>
+                <Button
+                  className={classes.uploadButton}
+                  variant="contained"
+                  value="Upload"
+                  color="primary"
+                  startIcon={<CloudUploadIcon />}
+                  onClick={uploadWithFormData}
+                >
+                  Upload
+                </Button>
+              </FileUploadWrapper>
+
+              <input
+                ref={inputRef}
+                style={{ display: "none" }}
+                type="file"
+                name="file"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+              <FileNameLabel>{file && file.name}</FileNameLabel>
+            </FileUploadForm>
+            <hr />
+            <UrlUploadForm>
+              <TextField
+                className={classes.filaNameInput}
+                id="outlined-basic"
+                label="URL"
+                style={{ margin: 8 }}
+                placeholder="Enter a valid URL"
+                value={url}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                }}
+                onKeyPress={handleKeypress}
+              />
+              <FileUploadWrapper>
+                <Button
+                  className={classes.uploadButton}
+                  variant="contained"
+                  value="Upload"
+                  color="primary"
+                  startIcon={<CloudUploadIcon />}
+                  onClick={uploadWithUrl}
+                >
+                  Submit
+                </Button>
+              </FileUploadWrapper>
+            </UrlUploadForm>
+          </LoadFileWrapper>
         </Container>
       </Box>
     </>

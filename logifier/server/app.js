@@ -39,4 +39,9 @@ app.post("/upload", upload.single("file"), (req, res) => {
   res.send(fileParser.getParsedData(currFileName));
 });
 
+app.post("/uploadUrl", async (req, res) => {
+  const url = req.body.data;
+  res.send(await fileParser.getUrlParsedData(url));
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
