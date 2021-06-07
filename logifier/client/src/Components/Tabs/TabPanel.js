@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -6,8 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DataGrid from "../DataGrid";
 import { useStyles } from "./TabPanel.styles.js";
-import DataContext from '../../provider';
-
+import DataContext from "../../provider";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,51 +48,67 @@ export default function VerticalTabs() {
   const [totalValues, setTotalValues] = useState(0);
 
   useEffect(() => {
-    console.log('inside useeffect', dataContext);
-    setTotalValues(dataContext.uploadedFileData ? Object.keys(dataContext.uploadedFileData).length: 0);
-  }, [dataContext])
+    setTotalValues(
+      dataContext.uploadedFileData
+        ? Object.keys(dataContext.uploadedFileData).length
+        : null
+    );
+  }, [dataContext]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
-    <div className={classes.root}>
-      {console.log("inside tab panel", totalValues)}
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        {totalValues > 0 ? [...Array(totalValues)].map((x, i) => {
-          return (
-            <Tab
-              label={JSON.stringify(dataContext.uploadedFileData[i + 1].metadata.tableName)}
-              {...a11yProps(i)}
-            />
-          );
-        }): "hello"}
-      </Tabs>
-      {totalValues > 0 ? [...Array(totalValues)].map((x, i) => {
-        return (
-          <TabPanel value={value} index={i} className={classes.panelWrapper}>
-            <DataGrid
-              initialData={dataContext.uploadedFileData[i + 1].data.map((data) => {
-                return Object.entries(data).map(([key, value], i) => {
-                  if (typeof value !== "string") {
-                    return JSON.stringify(value);
-                  } else {
-                    return value;
+    <>
+      {totalValues && (
+        <div className={classes.root}>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            className={classes.tabs}
+          >
+            {[...Array(totalValues)].map((x, i) => {
+              return (
+                <Tab
+                  label={JSON.stringify(
+                    dataContext.uploadedFileData[i + 1].metadata.tableName
+                  )}
+                  {...a11yProps(i)}
+                />
+              );
+            })}
+          </Tabs>
+          {[...Array(totalValues)].map((x, i) => {
+            return (
+              <TabPanel
+                value={value}
+                index={i}
+                className={classes.panelWrapper}
+              >
+                <DataGrid
+                  initialData={dataContext.uploadedFileData[i + 1].data.map(
+                    (data) => {
+                      return Object.entries(data).map(([key, value], i) => {
+                        if (typeof value !== "string") {
+                          return JSON.stringify(value);
+                        } else {
+                          return value;
+                        }
+                      });
+                    }
+                  )}
+                  initialColumns={
+                    dataContext.uploadedFileData[i + 1].metadata.tableColumns
                   }
-                });
-              })}
-              initialColumns={dataContext.uploadedFileData[i + 1].metadata.tableColumns}
-            />
-          </TabPanel>
-        );
-      }):"hehe"}
-    </div>
+                />
+              </TabPanel>
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 }

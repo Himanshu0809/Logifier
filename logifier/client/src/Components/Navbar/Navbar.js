@@ -10,7 +10,6 @@ function Navbar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
       <AppBar position="static" className={classes.navbarWrapper}>
         <Toolbar>  
           <Typography variant="h6" className={classes.title}>
@@ -18,7 +17,6 @@ function Navbar() {
           </Typography>
         </Toolbar>
       </AppBar>
-    </div>
   );
 }
 
