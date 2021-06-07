@@ -51,7 +51,7 @@ export default function VerticalTabs() {
   useEffect(() => {
     console.log('inside useeffect', dataContext);
     setTotalValues(dataContext.uploadedFileData ? Object.keys(dataContext.uploadedFileData).length: 0);
-  }, [dataContext.uploadedFileData])
+  }, [dataContext])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -67,7 +67,7 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        {totalValues.length>0 ? [...Array(totalValues)].map((x, i) => {
+        {totalValues > 0 ? [...Array(totalValues)].map((x, i) => {
           return (
             <Tab
               label={JSON.stringify(dataContext.uploadedFileData[i + 1].metadata.tableName)}
@@ -76,7 +76,7 @@ export default function VerticalTabs() {
           );
         }): "hello"}
       </Tabs>
-      {totalValues.length>0 ? [...Array(totalValues)].map((x, i) => {
+      {totalValues > 0 ? [...Array(totalValues)].map((x, i) => {
         return (
           <TabPanel value={value} index={i} className={classes.panelWrapper}>
             <DataGrid
