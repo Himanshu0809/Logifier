@@ -17,6 +17,7 @@ const FileUploader = (props) => {
   const dataContext = useContext(DataContext);
   const classes = useStyles();
   const inputRef = useRef();
+  const fileNameInputRef = useRef();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [responseData, setResponseData] = useState(null);
@@ -87,6 +88,7 @@ const FileUploader = (props) => {
         <Container maxWidth="lg">
           <form autoComplete="off">
             <TextField
+              inputRef={fileNameInputRef}
               className={classes.filaNameInput}
               id="outlined-basic"
               label="File Name"
@@ -129,7 +131,8 @@ const FileUploader = (props) => {
               style={{ display: "none" }}
               type="file"
               name="file"
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={(e) => {setFile(e.target.files[0])
+                fileNameInputRef.current.focus()}}
             />
             <FileNameLabel>{file && file.name}</FileNameLabel>
           </form>
