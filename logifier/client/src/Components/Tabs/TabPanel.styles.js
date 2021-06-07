@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: "flex",
     minHeight: "700px",
+    maxHeight: '800px',
     marginTop: "100px",
   },
 

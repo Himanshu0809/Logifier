@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { Box, Container, TextField, Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
@@ -11,36 +11,67 @@ import {
 } from "./FileUploader.styles.js";
 import { uploadFile } from "../../services/file_uploader_service";
 import MessagePlaceholder from "../MessagePlaceholder/MessagePlaceholder.js";
-
-const submitForm = async (contentType, data) => {
-  const response = await uploadFile(contentType, data);
-  // we can set the state here ...
-  console.log("response recieved from server", response);
-};
+import DataContext from "../../provider";
 
 const FileUploader = (props) => {
+  const dataContext = useContext(DataContext);
   const classes = useStyles();
   const inputRef = useRef();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
+  const [responseData, setResponseData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [severity, setSeverity] = useState(null);
 
-  const uploadWithFormData = () => {
+  useEffect(() => {
+    dataContext.handleUploadedFileData(responseData);
+  }, [responseData, dataContext]);
+
+  const submitForm = async (contentType, data) => {
+    const response = await uploadFile(contentType, data);
+    return response.data;
+  };
+
+  const handleKeypress = (e) => {
+    if (e.key === "Enter") {
+      setIsSuccess(false);
+      uploadWithFormData();
+      e.preventDefault();
+    }
+  };
+
+  const showAlertMessage = (message, severity) => {
+    return (
+      <MessagePlaceholder
+        open={isSuccess}
+        message={message}
+        severity={severity}
+      />
+    );
+  };
+
+  const uploadWithFormData = async () => {
+    if (!file) {
+      setAlertMessage("Please attach file to upload");
+      setSeverity("error");
+      setIsSuccess(true);
+      return;
+    }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", file);
 
-    submitForm("multipart/form-data", formData);
+    const temp = await submitForm("multipart/form-data", formData);
+    setResponseData(temp);
+    setAlertMessage("File Uploaded Successfully!!");
+    setSeverity("success");
     setIsSuccess(true);
   };
 
   return (
     <>
-      <MessagePlaceholder
-        open={isSuccess}
-        message="File Uploaded Successfully!!"
-        severity="success"
-      />
+      {isSuccess && showAlertMessage(alertMessage, severity)}
       <Box
         bgcolor="#f4f4fd"
         p={1}
@@ -68,6 +99,7 @@ const FileUploader = (props) => {
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
+              onKeyPress={handleKeypress}
             />
 
             <FileUploadWrapper>
