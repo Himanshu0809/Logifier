@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import DataGrid from "../DataGrid";
 import { useStyles } from "./TabPanel.styles.js";
 import DataContext from "../../provider";
+import Image from "../Image/Image";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,7 +61,7 @@ export default function VerticalTabs() {
   };
   return (
     <>
-      {totalValues && (
+      {totalValues ? (
         <div className={classes.root}>
           <Tabs
             orientation="vertical"
@@ -108,7 +109,8 @@ export default function VerticalTabs() {
             );
           })}
         </div>
-      )}
+      ): <Image source="https://assets-global.website-files.com/603024253162e8642dc31b96/603024253162e84f56c320a5_1920x1080-LogDNA-Blog-Graph-Logs-Visualize-Data-for-Proper-Log-Analysis-p-800.jpeg"/>
+      }
     </>
   );
 }
