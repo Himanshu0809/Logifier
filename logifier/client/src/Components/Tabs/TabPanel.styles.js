@@ -16,11 +16,6 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   panelWrapper: {
-    maxWidth: "90%",
-    maxHeight: "100%",
-  },
-
-  dataTableWrapper: {
-    maxHeight: "10%",
+    maxWidth: "80%"
   },
 }));
