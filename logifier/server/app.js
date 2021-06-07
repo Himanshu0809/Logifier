@@ -4,6 +4,8 @@ const multer = require("multer");
 const cors = require("cors");
 const fs = require("fs");
 
+const fileParser = require("./file_parser");
+
 const upload = multer({
   dest: "uploads/", // this saves your file into a directory called "uploads"
 });
@@ -33,7 +35,8 @@ app.post("/upload", upload.single("file"), (req, res) => {
       req.body.title ? req.body.title : req.file.originalname
     )
   );
-  res.send("OKAY");
+  const currFileName = req.body.title ? req.body.title : req.file.originalname;
+  res.send(fileParser.getParsedData(currFileName));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

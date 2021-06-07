@@ -12,8 +12,10 @@ import {
 import { uploadFile } from "../../services/file_uploader_service";
 import MessagePlaceholder from "../MessagePlaceholder/MessagePlaceholder.js";
 
-const submitForm = (contentType, data) => {
-  uploadFile(contentType, data);
+const submitForm = async (contentType, data) => {
+  const response = await uploadFile(contentType, data);
+  // we can set the state here ...
+  console.log("response recieved from server", response);
 };
 
 const FileUploader = (props) => {

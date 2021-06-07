@@ -1,18 +1,15 @@
 import axios from "axios";
 
-export function uploadFile(contentType, data) {
-  axios({
+export async  function uploadFile(contentType, data) {
+  const response = await axios({
     url: "/upload",
     method: "POST",
     data: data,
     headers: {
       "Content-Type": contentType,
     },
-  })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return "error";
-    });
+  }).catch((error) => {
+    return "error";
+  });
+  return response;
 }

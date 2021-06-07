@@ -1,70 +1,89 @@
 var fs = require("fs");
+var path = require("path");
 
-function processedData(fullPath, data) {
+// get the table name 
+function getTableName(fullPath) {
+  let splittedPath = fullPath.split("/");
+  return splittedPath[splittedPath.length - 1];
+}
+
+// get the columns name
+function getColumnsName(data) {
   let tableColumnsName = [];
   let tempData = data.length && data[0];
   for (const key in tempData) {
     tableColumnsName.push(key);
   }
-  let splittedPath = fullPath.split("/");
-  return [splittedPath[splittedPath.length - 1], tableColumnsName];
+  return tableColumnsName;
 }
-fs.readFile(
-  "/Users/himanshugupta/Desktop/Coding/reactprojects/TeamEagle/logifier/server/uploads/Logs2",
-  "utf8",
-  function (err, data) {
-    var str = data.split("\n");
-    var even_odd = 0;
-    var result = {};
-    k = 0;
 
-    for (var i = 0; i < str.length; i++) {
-      if (str[i] === "----------------------------------------") {
-        even_odd ^= 1;
-        prevTableName = str[i - 1];
-        if (!even_odd) {
-          k += 1;
-          result[k] = {
-            metadata: {
-              tableName: prevTableName,
-              tableColumns: "",
-              noOfRows: "",
-            },
-            data: [],
-          };
-        }
-      }
-      if (
-        !even_odd &&
-        str[i] !== "----------------------------------------" &&
-        str[i] != ""
-      ) {
-        try {
-          result[k].data.push(JSON.parse(str[i]));
-        } catch (error) {
-          result[k].data.push(str[i].split(" "));
-        }
-      }
-    }
-
-    console.log(result);
-
-    for (const key in result) {
-      try {
-        var retVal = processedData(
-          result[key].metadata.tableName,
-          result[key].data
-        );
-        result[key].metadata.tableColumns = retVal[1];
-        result[key].metadata.noOfRows = result[key].data.length;
-        result[key].metadata.tableName = retVal[0];
-      } catch (error) {
-        console.log("Nothing");
-      }
-    }
-
-    console.log(JSON.stringify(result));
+function readFile(fileName) {
+  let filePath = path.join(__dirname, "uploads", fileName);
+  try {
+    // read the file synchronusly ...
+    var data = fs.readFileSync(filePath, "utf8");
+    return { fileContent: data, status: 200 };
+  } catch (error) {
+    return { data: error, status: 503 };
   }
-);
+}
 
-console.log("readFile called");
+module.exports = {
+    getParsedData : function(fileName) {
+        let result = {};
+        const filterToken = "----------------------------------------";
+        const retVal = readFile(fileName);
+        if (retVal.status !== 200) {
+          console.log("something went wrong :-( ");
+        } else {
+          const splittedData = retVal.fileContent.split("\n");
+          let even_odd = 0,
+            idx = 0;
+      
+          for (let i = 0; i < splittedData.length; i++) {
+            if (splittedData[i] === filterToken) {
+              even_odd ^= 1;
+              logFileName = splittedData[i - 1];
+              if (!even_odd) {
+                idx += 1;
+                result[idx] = {
+                  metadata: {
+                    // intially setting the table name with logFileName
+                    tableName: logFileName,
+                    tableColumns: "",
+                    noOfRows: "",
+                  },
+                  data: [],
+                };
+              }
+            }
+      
+            if (
+              !even_odd &&
+              splittedData[i] !== filterToken &&
+              splittedData[i] != ""
+            ) {
+              try {
+                result[idx].data.push(JSON.parse(splittedData[i]));
+              } catch (error) {
+                result[idx].data.push(splittedData[i].split(" "));
+              }
+            }
+          }
+      
+          for (const key in result) {
+            try {
+              result[key].metadata.tableColumns = getColumnsName(result[key].data);
+              result[key].metadata.noOfRows = result[key].data.length;
+              result[key].metadata.tableName = getTableName(
+                result[key].metadata.tableName
+              );
+            } catch (error) {
+              console.log("Do Nothing");
+            }
+          }
+        }
+        console.log(result);
+        return JSON.stringify(result);
+      }
+};
