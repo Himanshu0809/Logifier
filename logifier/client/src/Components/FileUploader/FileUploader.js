@@ -1,10 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  Box,
-  Container,
-  TextField,
-  Button
-} from "@material-ui/core";
+import { Box, Container, TextField, Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
 import {
@@ -12,30 +7,38 @@ import {
   FileUploadWrapper,
   HeaderHorizontalRule,
   FileNameLabel,
-  useStyles
+  useStyles,
 } from "./FileUploader.styles.js";
-import {uploadFile} from '../../services/file_uploader_service';
+import { uploadFile } from "../../services/file_uploader_service";
+import MessagePlaceholder from "../MessagePlaceholder/MessagePlaceholder.js";
 
-function submitForm(contentType, data, setResponse) {
-  setResponse(uploadFile(contentType, data));
-}
+const submitForm = (contentType, data) => {
+  uploadFile(contentType, data);
+};
 
-function FileUploader() {
+const FileUploader = (props) => {
   const classes = useStyles();
   const inputRef = useRef();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  function uploadWithFormData() {
+  const uploadWithFormData = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", file);
 
-    submitForm("multipart/form-data", formData, (msg) => console.log(msg));
-  }
+    submitForm("multipart/form-data", formData);
+    setIsSuccess(true);
+  };
 
   return (
     <>
+      <MessagePlaceholder
+        open={isSuccess}
+        message="File Uploaded Successfully!!"
+        severity="success"
+      />
       <Box
         bgcolor="#f4f4fd"
         p={1}
@@ -69,7 +72,10 @@ function FileUploader() {
               <AddIcon
                 className={classes.uploadIcon}
                 fontSize="large"
-                onClick={() => inputRef.current.click()}
+                onClick={() => {
+                  inputRef.current.click();
+                  setIsSuccess(false);
+                }}
               />
 
               <Button
@@ -97,6 +103,6 @@ function FileUploader() {
       </Box>
     </>
   );
-}
+};
 
 export default FileUploader;

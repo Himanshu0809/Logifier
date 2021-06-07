@@ -1,19 +1,18 @@
 import React from "react";
 import FileUploader from "../FileUploader";
-import Navbar from "../Navbar/Navbar.js";
+import Navbar from "../Navbar";
 import Container from "@material-ui/core/Container";
-import Footer from "../Footer/Footer.js";
-import TabPanel from "../Tabs/TabPanel.js";
+import Footer from "../Footer";
+import TabPanel from "../Tabs";
 
 function App() {
-  
   return (
     <>
       <Navbar />
       <Container maxWidth="lg">
         <FileUploader />
-        <TabPanel />
       </Container>
+      <TabPanel />
       <Footer />
     </>
   );

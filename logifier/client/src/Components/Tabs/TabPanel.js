@@ -6,7 +6,9 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DataGrid from "../DataGrid";
 import { useStyles } from "./TabPanel.styles.js";
+var jsonData = require("./mockData.json");
 
+const totalValues = Object.keys(jsonData).length;
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -19,7 +21,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={10}>
+        <Box p={3}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -47,7 +49,6 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <div className={classes.root}>
       <Tabs
@@ -58,35 +59,33 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
+        {[...Array(totalValues)].map((x, i) => {
+          return (
+            <Tab
+              label={JSON.stringify(jsonData[i + 1].metadata.tableName)}
+              {...a11yProps(i)}
+            />
+          );
+        })}
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <DataGrid />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item Four
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
-      </TabPanel>
+      {[...Array(totalValues)].map((x, i) => {
+        return (
+          <TabPanel value={value} index={i} className={classes.panelWrapper}>
+            <DataGrid
+              initialData={jsonData[i + 1].data.map((data) => {
+                return Object.entries(data).map(([key, value], i) => {
+                  if (typeof value !== "string") {
+                    return JSON.stringify(value);
+                  } else {
+                    return value;
+                  }
+                });
+              })}
+              initialColumns={jsonData[i + 1].metadata.tableColumns}
+            />
+          </TabPanel>
+        );
+      })}
     </div>
   );
 }

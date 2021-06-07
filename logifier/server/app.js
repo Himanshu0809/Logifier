@@ -1,12 +1,12 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const multer = require('multer');
-const cors = require('cors');
-const fs = require('fs');
+const express = require("express");
+const bodyParser = require("body-parser");
+const multer = require("multer");
+const cors = require("cors");
+const fs = require("fs");
 
 const upload = multer({
-  dest: 'uploads/', // this saves your file into a directory called "uploads"
-}); 
+  dest: "uploads/", // this saves your file into a directory called "uploads"
+});
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(cors());
@@ -14,20 +14,26 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+app.get("/api/hello", (req, res) => {
+  res.send({ express: "Hello From Express" });
 });
 
-app.post('/api/world', (req, res) => {
+app.post("/api/world", (req, res) => {
   console.log(req.body);
   res.send(
-    `I received your POST request. This is what you sent me: ${req.body.data}`,
+    `I received your POST request. This is what you sent me: ${req.body.data}`
   );
 });
 
-app.post('/upload', upload.single('file'), (req, res) => {
-  fs.renameSync(req.file.path, req.file.path.replace(req.file.filename, req.body.title? req.body.title:req.file.originalname));
-  res.send("OKAY")
+app.post("/upload", upload.single("file"), (req, res) => {
+  fs.renameSync(
+    req.file.path,
+    req.file.path.replace(
+      req.file.filename,
+      req.body.title ? req.body.title : req.file.originalname
+    )
+  );
+  res.send("OKAY");
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
