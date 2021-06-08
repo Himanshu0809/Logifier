@@ -49,3 +49,16 @@ export const useStyles = makeStyles((theme) => ({
     color: "white",
   },
 }));
+
+export const LoadFileWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const FileUploadForm = styled.form`
+  width: 40%;
+`;
+
+export const UrlUploadForm = styled.form`
+  width: 45%;
+`;

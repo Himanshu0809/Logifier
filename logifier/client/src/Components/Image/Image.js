@@ -9,6 +9,7 @@ const Image = (props) => {
           className="profile-photo"
           src={props.source}
           alt="No data available! Upload data!"
+          style={{width: '50%'}}
         />
       </ImageWrapper>
     </>
