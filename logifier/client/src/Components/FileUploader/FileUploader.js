@@ -38,7 +38,6 @@ const FileUploader = (props) => {
   };
 
   const submitUrlForm = async (data) => {
-    console.log('ded', data)
     const response = await loadUrl(data);
     return response.data;
   };
@@ -81,6 +80,12 @@ const FileUploader = (props) => {
   };
 
   const uploadWithUrl = async () => {
+    if(!url) {
+      setAlertMessage("Please add valid URL");
+      setSeverity("error");
+      setIsSuccess(true);
+      return;
+    }
     const urlResponse = await submitUrlForm(String(url));
     setResponseData(urlResponse);
     setAlertMessage("URL submitted successfully!!");
