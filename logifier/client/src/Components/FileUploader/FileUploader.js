@@ -45,16 +45,17 @@ const FileUploader = (props) => {
 
   const handleKeypress = (e) => {
     if (e.key === "Enter") {
-      setIsSuccess(false);
       uploadWithFormData();
       e.preventDefault();
     }
   };
 
   const showAlertMessage = (message, severity) => {
+    // delay for 3 sec and set it to the false
+    setTimeout(()=>{setIsSuccess(false);},3000);
     return (
       <MessagePlaceholder
-        open={isSuccess}
+        open={true}
         message={message}
         severity={severity}
       />
@@ -127,7 +128,6 @@ const FileUploader = (props) => {
                   fontSize="large"
                   onClick={() => {
                     inputRef.current.click();
-                    setIsSuccess(false);
                   }}
                 />
 
