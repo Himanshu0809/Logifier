@@ -8,6 +8,7 @@ import DataGrid from "../DataGrid";
 import { useStyles } from "./TabPanel.styles.js";
 import DataContext from "../../provider";
 import Image from "../Image/Image";
+import Modal from '../Modal';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,6 +60,11 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleModalClick = () => {
+    <Modal />
+  }
+
   return (
     <>
       {totalValues ? (
@@ -94,7 +100,7 @@ export default function VerticalTabs() {
                     (data) => {
                       return Object.entries(data).map(([key, value], i) => {
                         if (typeof value !== "string") {
-                          return JSON.stringify(value);
+                          return <a href="#" onClick={handleModalClick}>{JSON.stringify(value)}</a>
                         } else {
                           return value;
                         }
@@ -104,6 +110,7 @@ export default function VerticalTabs() {
                   initialColumns={
                     dataContext.uploadedFileData[i + 1].metadata.tableColumns
                   }
+                  selectedLabel={dataContext.uploadedFileData[i+1].metadata.tableName}
                 />
               </TabPanel>
             );

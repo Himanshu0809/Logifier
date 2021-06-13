@@ -15,7 +15,7 @@ function DataGrid(props) {
   };
   return (
     <MUIDataTable
-      title="LOGIFIED DATA"
+      title={props.selectedLabel? props.selectedLabel.toUpperCase(): 'LOGIFIED DATA'}
       data={data}
       columns={columns}
       options={options}
