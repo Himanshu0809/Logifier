@@ -9,6 +9,26 @@ import { useStyles } from "./TabPanel.styles.js";
 import DataContext from "../../provider";
 import Image from "../Image/Image";
 import Modal from '../Modal';
+// import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+// import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,9 +65,28 @@ function a11yProps(index) {
 
 export default function VerticalTabs() {
   const dataContext = useContext(DataContext);
-  const classes = useStyles();
+  // const classes = useStyles();
+  const useStylesq = makeStyles((theme) => ({
+    appBar: {
+      position: 'relative',
+    },
+    title: {
+      marginLeft: theme.spacing(2),
+      flex: 1,
+    },
+  }));
+  
   const [value, setValue] = React.useState(0);
   const [totalValues, setTotalValues] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     setTotalValues(
@@ -61,8 +100,14 @@ export default function VerticalTabs() {
     setValue(newValue);
   };
 
-  const handleModalClick = () => {
-    <Modal />
+  const handleModalClick = (data) => {
+    setModalData(data);
+    setIsOpen(true);
+  }
+
+  function setIsOpenMethod() {
+    console.log("coming heree");
+    setIsOpen(false);
   }
 
   return (
@@ -100,7 +145,7 @@ export default function VerticalTabs() {
                     (data) => {
                       return Object.entries(data).map(([key, value], i) => {
                         if (typeof value !== "string") {
-                          return <a href="#" onClick={handleModalClick}>{JSON.stringify(value)}</a>
+                          return <a href="#" onClick={() => handleModalClick(data)}>{JSON.stringify(value)}</a>
                         } else {
                           return value;
                         }
@@ -118,6 +163,7 @@ export default function VerticalTabs() {
         </div>
       ): <Image source="https://assets-global.website-files.com/603024253162e8642dc31b96/603024253162e84f56c320a5_1920x1080-LogDNA-Blog-Graph-Logs-Visualize-Data-for-Proper-Log-Analysis-p-800.jpeg"/>
       }
+      {isOpen ? <Modal isOpen={true} setIsOpenMethod={setIsOpenMethod} data={modalData} /> : null}
     </>
   );
 }
