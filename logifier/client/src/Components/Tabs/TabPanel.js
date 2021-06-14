@@ -5,9 +5,10 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DataGrid from "../DataGrid";
-import { useStyles } from "./TabPanel.styles.js";
+import { useStyles, ModalData } from "./TabPanel.styles.js";
 import DataContext from "../../provider";
 import Image from "../Image/Image";
+import Modal from '../Modal';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,9 +45,13 @@ function a11yProps(index) {
 
 export default function VerticalTabs() {
   const dataContext = useContext(DataContext);
-  const classes = useStyles();
+  
   const [value, setValue] = React.useState(0);
   const [totalValues, setTotalValues] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
+  const classes = useStyles();
 
   useEffect(() => {
     setTotalValues(
@@ -59,6 +64,16 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleModalClick = (data) => {
+    setModalData(data);
+    setIsOpen(true);
+  }
+
+  function setIsOpenMethod() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       {totalValues ? (
@@ -94,7 +109,7 @@ export default function VerticalTabs() {
                     (data) => {
                       return Object.entries(data).map(([key, value], i) => {
                         if (typeof value !== "string") {
-                          return JSON.stringify(value);
+                          return <ModalData title='Click here to expand' onClick={() => handleModalClick(data)}>{JSON.stringify(value)}</ModalData>
                         } else {
                           return value;
                         }
@@ -104,6 +119,7 @@ export default function VerticalTabs() {
                   initialColumns={
                     dataContext.uploadedFileData[i + 1].metadata.tableColumns
                   }
+                  selectedLabel={dataContext.uploadedFileData[i+1].metadata.tableName}
                 />
               </TabPanel>
             );
@@ -111,6 +127,7 @@ export default function VerticalTabs() {
         </div>
       ): <Image source="https://assets-global.website-files.com/603024253162e8642dc31b96/603024253162e84f56c320a5_1920x1080-LogDNA-Blog-Graph-Logs-Visualize-Data-for-Proper-Log-Analysis-p-800.jpeg"/>
       }
+      {isOpen ? <Modal isOpen={true} setIsOpenMethod={setIsOpenMethod} data={modalData} /> : null}
     </>
   );
 }

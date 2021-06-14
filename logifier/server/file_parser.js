@@ -98,7 +98,6 @@ module.exports = {
   getParsedData: function (fileName) {
     const retVal = readFile(fileName);
     result = parsingLogic(retVal);
-    console.log(result);
     return JSON.stringify(result);
   },
   getUrlParsedData: async function (url) {
