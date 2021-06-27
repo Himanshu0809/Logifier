@@ -1,0 +1,17 @@
+.content{
+    color: black;
+}
+
+body{
+    min-height: 200px;
+    min-width: 200px;
+}
+
+a {
+    background-color: blue;
+    color: white;
+    min-width: 100%;
+    margin:3px;
+    min-height: 10px;
+    text-align: center;
+}
