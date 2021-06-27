@@ -1,0 +1,27 @@
+{
+    "name": "Logifier",
+    "version": "0.1",
+    "description": "A utility for opening AWS beanstalk logs in web app",
+    "manifest_version": 2,
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://www.googletagmanager.com; object-src 'self'",
+    "permissions": [
+      "activeTab"
+    ],
+    "externally_connectable": {
+        "matches": ["*://*.github.com/*"]
+    },
+    "background": {
+      "service-worker": "./background.js"
+
+    },
+    
+    "content_scripts": [ {
+      "matches":      ["*://*.github.com/*"],
+      "js": ["./content.js"]
+    }],
+    
+    "browser_action": {
+      "default_popup": "./index.html",
+      "default_title": "Kaggle Hawk"
+    }
+  }
