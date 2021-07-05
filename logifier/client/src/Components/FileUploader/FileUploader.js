@@ -27,10 +27,32 @@ const FileUploader = (props) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
   const [severity, setSeverity] = useState(null);
+  const [params, setParams] = useState(null);
+
+  const createURL = (paramObj) => {
+    if (!paramObj) {
+      return "";
+    }
+    let url = paramObj.q;
+    Object.keys(paramObj).forEach(function (key) {
+      if (key !== "q") {
+        paramObj[key] = paramObj[key].replace(/\//g, "%2F");
+        url += `&${key}=${paramObj[key]}`;
+      }
+    });
+    return url;
+  };
 
   useEffect(() => {
     dataContext.handleUploadedFileData(responseData);
-  }, [responseData, dataContext]);
+    const urlParams = new URLSearchParams(window.location.search);
+    let paramObj = {};
+    for (var value of urlParams.keys()) {
+      paramObj[value] = urlParams.get(value);
+    }
+    let extUrl = createURL(paramObj);
+    setParams(extUrl);
+  }, [responseData, dataContext, params]);
 
   const submitForm = async (contentType, data) => {
     const response = await uploadFile(contentType, data);
@@ -51,13 +73,11 @@ const FileUploader = (props) => {
 
   const showAlertMessage = (message, severity) => {
     // delay for 3 sec and set it to the false
-    setTimeout(()=>{setIsSuccess(false);},3000);
+    setTimeout(() => {
+      setIsSuccess(false);
+    }, 3000);
     return (
-      <MessagePlaceholder
-        open={true}
-        message={message}
-        severity={severity}
-      />
+      <MessagePlaceholder open={true} message={message} severity={severity} />
     );
   };
 
@@ -80,18 +100,23 @@ const FileUploader = (props) => {
   };
 
   const uploadWithUrl = async () => {
-    if(!url) {
+    if (!url && !params) {
       setAlertMessage("Please add valid URL");
       setSeverity("error");
       setIsSuccess(true);
       return;
     }
-    const urlResponse = await submitUrlForm(String(url));
+    let urlResponse = "";
+    if (url) {
+      urlResponse = await submitUrlForm(String(url));
+    } else if (params) {
+      urlResponse = await submitUrlForm(String(params));
+    }
     setResponseData(urlResponse);
     setAlertMessage("URL submitted successfully!!");
     setSeverity("success");
     setIsSuccess(true);
-  }
+  };
 
   return (
     <>
@@ -165,12 +190,16 @@ const FileUploader = (props) => {
                 label="URL"
                 style={{ margin: 8 }}
                 placeholder="Enter a valid URL"
-                value={url}
+                value={params ? params : url}
                 fullWidth
                 margin="normal"
                 variant="outlined"
                 onChange={(e) => {
-                  setUrl(e.target.value);
+                  if (params) {
+                    setParams(e.target.value);
+                  } else {
+                    setUrl(e.target.value);
+                  }
                 }}
                 onKeyPress={handleKeypress}
               />

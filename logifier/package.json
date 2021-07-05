@@ -2,7 +2,8 @@
 	"name": "logifier",
 	"version": "1.0.0",
 	"scripts": {
-		"client": "cd client && npm run start",
+		"client-app": "cd client && npm run start-app",
+		"client-browser": "cd client && npm run start-browser",
 		"server": "cd server && nodemon app.js",
 		"dev": "concurrently --kill-others-on-fail \"npm server\" \"npm client\""
 	},
