@@ -1,17 +1,130 @@
-.content{
-    color: black;
-}
-
 body{
-    min-height: 200px;
-    min-width: 200px;
+    min-width: 400px;
+    margin-top: 8%; 
+    align-items: center;
+    color: rgb(245, 245, 245);
+    background-color: rgb(15, 15, 15);
 }
 
-a {
-    background-color: blue;
-    color: white;
-    min-width: 100%;
-    margin:3px;
-    min-height: 10px;
+.description{
+    line-height: 35px;
+    width: 100%;
+    font-size: 110%;
+    font-family: "Courier New", "Lucida Console", monospace;
+    vertical-align: text-bottom;
+}
+
+.content-wrapper{
     text-align: center;
+}
+
+.typed {
+    line-height: 35px;
+    font-weight: 600;
+    width: 100%;
+    font-size: 150%;
+    font-family: "Courier New", "Lucida Console", monospace;
+    vertical-align: text-bottom;
+}
+
+.typed::after{
+    content: "|";
+    font-size: 150%;
+    line-height: 30px;
+    animation: blink .75s step-end infinite;
+}
+
+.frame {
+    width: 90%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+button {
+    margin: 20px;
+    outline: none;
+}
+
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid #000;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.logs-btn{
+    position: relative;
+    right: 20px;
+    bottom: 20px;
+    border:none;
+    width: 130px;
+    height: 40px;
+    line-height: 40px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+}
+
+.logs-btn span {
+    color: white;
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    border: 2px solid white;
+    margin:0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.logs-btn span:nth-child(1) {
+    box-shadow:
+     -7px -7px 20px 0px #fff9,
+     -4px -4px 5px 0px #fff9,
+     7px 7px 20px 0px #0002,
+     4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.logs-btn span:nth-child(2) {
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.logs-btn:hover span:nth-child(1) {
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.logs-btn:hover span:nth-child(2) {
+    background: #e0e5ec;
+    color: white;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+}
+
+@keyframes blink {
+    from, to { color: transparent }
+    50% { color: rgba(245, 245, 245) }
 }

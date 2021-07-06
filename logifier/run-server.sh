@@ -33,7 +33,12 @@ nohup $serverCmd &
 # Storing the background process' PID.
 server_bg_pid=$!
 
-clientCmd="npm run client"
+if echo $1 | grep 'browser';
+then
+  clientCmd="npm run client-browser"
+else
+  clientCmd="npm run client-app"
+fi
 nohup $clientCmd &
 
 # Storing the background process' PID

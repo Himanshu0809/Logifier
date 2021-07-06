@@ -35,6 +35,7 @@ const fetchUrlData = async (url) => {
     return { fileContent: res.data, status: 200 };
   } catch (e) {
     console.error(e);
+    return { fileContent: null, status: 503 };
   }
 };
 
