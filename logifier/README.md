@@ -39,6 +39,11 @@ It converts logs in the form of a prettified table which is easy to read and und
             ```
 
     - **`For windows`**
+        - Create a folder **`uploads`** inside server directory.
+            ```
+            cd server
+            mkdir uploads
+            ```
 
         - If you want to open it in **browser**:
             ```
