@@ -5,7 +5,7 @@ chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
 });
 
 let textLength = 0;
-let text = 'Welcome to LogiExtension';
+let text = 'Welcome to LogXtension';
 
 function type() {
     let textChar = text.charAt(textLength++);
