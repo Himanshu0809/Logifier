@@ -5,8 +5,11 @@ Logifier is Single Page application which transform AWS beanstalk logs and prese
 It converts logs in the form of a prettified table which is easy to read and understand and provides multiple facilities like search, filter according to columns or values, sort and many more...
 
 ## How to Run the Application Locally
-- Clone the repository : [Link](https://github.com/Himanshu0809/Team-Eagle.git)
-- Install all the dependencies for 
+- Clone the repository : 
+    ```
+    https://github.com/Himanshu0809/Team-Eagle.git
+    ```
+- Install all the dependencies for :
     - Server
         ```
         npm install
@@ -90,7 +93,27 @@ It converts logs in the form of a prettified table which is easy to read and und
     - **POSTMAN** - API client tool to create, share, test and document APIs easily.
 
 
-## Screenshot
-[coming soon ...]
+## SCREENSHOTS
+- Home Page 
 
-To file any issue :point_right:  [here](https://github.com/Himanshu0809/Team-Eagle/issues) and feel free to contribute :slightly_smiling_face: 
+    ![Logifier](./Screenshots/Logifier.png)
+
+- URL
+
+    ![Logifier](./Screenshots/logifier-url.png)
+
+- Logs Table
+
+    ![Logifier](./Screenshots/logs.png)
+
+- Each Prettified Log
+
+    ![Logifier](./Screenshots/prettified-log.png)
+
+- Extension
+
+    ![Chrome extension](./Screenshots/extension.png)
+
+## CONTRIBUTE
+- To file any issue :point_right:  [here](https://github.com/Himanshu0809/Team-Eagle/issues) 
+- Feel free to contribute :smile: 
