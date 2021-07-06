@@ -7,7 +7,7 @@ It converts logs in the form of a prettified table which is easy to read and und
 ## How to Run the Application Locally
 - Clone the repository : 
     ```
-    https://github.com/Himanshu0809/Team-Eagle.git
+    git clone https://github.com/Himanshu0809/logifier.git
     ```
 - Install all the dependencies for :
     - Server
