@@ -27,6 +27,13 @@ then
   touch nohup.out
 fi
 
+DIR="/server/uploads"
+if [ -d "$DIR" ]; then
+   echo "Uploads folder exits ..."
+else
+  mkdir -p server/uploads
+fi
+
 serverCmd="npm run server"
 nohup $serverCmd &
 
